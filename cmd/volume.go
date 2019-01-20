@@ -12,9 +12,9 @@ import (
 
 // volumeCmd represents the source command
 var volumeCmd = &cobra.Command{
-	Use:   "volume [inc/dec] [diff]",
-	Short: "Get or define the volume.",
-	Long: `Get or define the volume. If diff is specified, increase or decrease volume by diff dB.`,
+	Use:   "volume [inc/dec diff]",
+	Short: "Get, increase or decrease the volume.",
+	Long: `Get, increase or decrease the volume. If diff is specified, increase or decrease volume by diff dB.`,
 	Args: cobra.MaximumNArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		endpoint := viper.GetString("endpoint")

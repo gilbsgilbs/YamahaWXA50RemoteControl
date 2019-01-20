@@ -8,7 +8,7 @@ depending on how my needs change.
 
 ## Usage
 
-0. Configure your network so that your device gets a static IP address lease.
+0. Configure your network so that your amplifier gets a static IP address lease.
 0. Create a config file in `$HOME/.config/wxa50/config.yml`:
    ```
    endpoint: http://<IP address of the amplifier>
