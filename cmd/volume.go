@@ -12,9 +12,14 @@ import (
 
 // volumeCmd represents the source command
 var volumeCmd = &cobra.Command{
-	Use:   "volume [inc/dec diff]",
-	Short: "Get, increase or decrease the volume.",
-	Long: `Get, increase or decrease the volume. If diff is specified, increase or decrease volume by diff dB.`,
+	Use:   "volume [inc/dec/set value]",
+	Short: "Get, set, increase or decrease the volume.",
+	Long: `Get, set, increase or decrease the volume.
+
+If an action and a value are specified, increase or decrease volume by ` +
+		`or set the volume to the opposite of the specified value in cB (= 0.1dB).` +
+		`e.g. "set 450" will set the volume to -45.0dB. "inc 50" will increase the ` +
+		`volume by 5.0dB.`,
 	Args: cobra.MaximumNArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		endpoint := viper.GetString("endpoint")
@@ -31,17 +36,30 @@ var volumeCmd = &cobra.Command{
 		}
 
 		if len(args) <= 1 {
-            return errors.New("expected two arguments")
+			return errors.New("expected two arguments")
 		}
 
 		action := args[0]
-		diff := args[1]
+		value := args[1]
+
+		valueAsInt, err := strconv.ParseInt(value, 10, 0)
+		if err != nil {
+			return errors.New(
+				fmt.Sprintf(
+					`cannot convert value "%s" to a positive integer.`,
+					value))
+		}
+
+		if action == "set" {
+			_, err = lib.SetVolume(endpoint, -1*int(valueAsInt))
+			return err
+		}
 
 		if action != "inc" && action != "dec" {
 			return errors.New(
 				fmt.Sprintf(
-				`unknown action "%s".`,
-				action))
+					`unknown action "%s".`,
+					action))
 		}
 
 		var sign int64 = 1
@@ -49,16 +67,8 @@ var volumeCmd = &cobra.Command{
 			sign = -1
 		}
 
-		diffAsInt, err := strconv.ParseInt(diff, 10, 0)
-		if err != nil || diffAsInt < 0 {
-			return errors.New(
-				fmt.Sprintf(
-					`"%s" is not a positive number`,
-					diff))
-		}
-
 		lvlValueAsInt, _ := strconv.ParseInt(lvlValue, 10, 0)
-		lvlValueAsInt += sign * diffAsInt
+		lvlValueAsInt += sign * valueAsInt
 
 		_, err = lib.SetVolume(endpoint, int(lvlValueAsInt))
 
