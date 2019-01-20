@@ -1,0 +1,25 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.11
+    environment:
+      - DEP_VERSION: v0.5.0
+    working_directory: /go/src/github.com/gilbsgilbs/YamahaWXA50RemoteControl
+    steps:
+      - checkout
+      - run:
+          name: dependencies
+          command: |
+            curl -L -s https://github.com/golang/dep/releases/download/${DEP_VERSION}/dep-linux-amd64 -o /go/bin/dep
+            chmod +x /go/bin/dep
+            /go/bin/dep ensure
+      - run:
+          name: build_amd64
+          command: GOOS=linux GOARCH=amd64 go build -o wxa50
+      - store_artifacts:
+          path: wxa50
+          destination: amd64
