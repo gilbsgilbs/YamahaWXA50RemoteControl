@@ -1,0 +1,17 @@
+---
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+      - run: go build -o wxa50
+      - uses: actions/upload-artifact@v3
+        with:
+          name: wxa50
+          path: wxa50
