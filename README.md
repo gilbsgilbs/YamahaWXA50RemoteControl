@@ -37,7 +37,6 @@ amplifier and sniff the packets through wireshark, or even simpler, using the
 
 ## TODO
 
-- Automate releases
 - Add more features
 - Check if it works with more Yamaha devices
 - First personal project written in Go, style could probably be improved
