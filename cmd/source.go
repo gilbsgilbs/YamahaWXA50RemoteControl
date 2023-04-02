@@ -12,8 +12,8 @@ import (
 var sourceCmd = &cobra.Command{
 	Use:   "source [new source]",
 	Short: "Get or define the source.",
-	Long: "Get or define the source. e.g. AUX, Spotify, …",
-	Args: cobra.MaximumNArgs(1),
+	Long:  "Get or define the source. e.g. AUX, Spotify, …",
+	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		endpoint := viper.GetString("endpoint")
 		if len(args) == 0 {

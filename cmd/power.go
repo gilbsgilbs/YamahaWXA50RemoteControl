@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 	"github.com/gilbsgilbs/YamahaWXA50RemoteControl/lib"
 	"github.com/spf13/viper"
@@ -13,19 +12,18 @@ import (
 var powerCmd = &cobra.Command{
 	Use:   "power on/off",
 	Short: "Powers the WXA on or off.",
-	Args: cobra.RangeArgs(1, 1),
+	Args:  cobra.RangeArgs(1, 1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		endpoint := viper.GetString("endpoint")
 		action := args[0]
 
-		var err error = nil
+		var err error
 		if action == "on" {
 			_, err = lib.PowerOn(endpoint)
 		} else if action == "off" {
 			_, err = lib.PowerOff(endpoint)
 		} else {
-			err = errors.New(
-				fmt.Sprintf(`unknown action "%s".`, action))
+			err = fmt.Errorf(`unknown action "%s".`, action)
 		}
 
 		return err

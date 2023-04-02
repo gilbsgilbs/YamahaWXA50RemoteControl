@@ -44,10 +44,7 @@ If an action and a value are specified, increase or decrease volume by ` +
 
 		valueAsInt, err := strconv.ParseInt(value, 10, 0)
 		if err != nil {
-			return errors.New(
-				fmt.Sprintf(
-					`cannot convert value "%s" to a positive integer.`,
-					value))
+			return fmt.Errorf(`cannot convert value "%s" to a positive integer.`, value)
 		}
 
 		if action == "set" {
@@ -56,10 +53,7 @@ If an action and a value are specified, increase or decrease volume by ` +
 		}
 
 		if action != "inc" && action != "dec" {
-			return errors.New(
-				fmt.Sprintf(
-					`unknown action "%s".`,
-					action))
+			return fmt.Errorf(`unknown action "%s".`, action)
 		}
 
 		var sign int64 = 1

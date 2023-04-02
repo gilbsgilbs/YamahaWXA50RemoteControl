@@ -3,7 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/url"
 	"os"
@@ -95,8 +95,8 @@ func initConfig() {
 
 	_ = viper.ReadInConfig()
 
-	if debug := viper.GetBool("debug"); debug == false {
-		log.SetOutput(ioutil.Discard)
+	if debug := viper.GetBool("debug"); !debug {
+		log.SetOutput(io.Discard)
 	}
 
 	if configFileUsed := viper.ConfigFileUsed(); configFileUsed != "" {

@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 	"github.com/antchfx/xmlquery"
 	"github.com/gilbsgilbs/YamahaWXA50RemoteControl/lib"
@@ -13,7 +12,7 @@ import (
 var muteCmd = &cobra.Command{
 	Use:   "mute [on/off/toggle]",
 	Short: "Mute or unmute the volume, or get the current mute status.",
-	Args: cobra.MaximumNArgs(1),
+	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		endpoint := viper.GetString("endpoint")
 
@@ -29,13 +28,14 @@ var muteCmd = &cobra.Command{
 
 		action := args[0]
 
-		var err error = nil
+		var err error
 		if action == "on" {
 			_, err = lib.Mute(endpoint)
 		} else if action == "off" {
 			_, err = lib.Unmute(endpoint)
 		} else if action == "toggle" {
-			node, err := lib.GetParams(endpoint)
+			var node *xmlquery.Node
+			node, err = lib.GetParams(endpoint)
 			if err != nil {
 				return err
 			}
@@ -45,16 +45,10 @@ var muteCmd = &cobra.Command{
 			} else if muteValue == "On" {
 				_, err = lib.Unmute(endpoint)
 			} else {
-				err = errors.New(
-					fmt.Sprintf(
-						`unknown mute value "%s".`,
-						muteValue))
+				err = fmt.Errorf(`unknown mute value "%s".`, muteValue)
 			}
 		} else {
-			err = errors.New(
-				fmt.Sprintf(
-					`unknown mute action "%s".`,
-					action))
+			err = fmt.Errorf(`unknown mute action "%s".`, action)
 		}
 
 		return err
