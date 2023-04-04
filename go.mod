@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/antchfx/xmlquery v1.3.15
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/spf13/cobra v1.6.1
+	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.15.0
 )
 
