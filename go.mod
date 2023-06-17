@@ -3,7 +3,7 @@ module github.com/gilbsgilbs/YamahaWXA50RemoteControl
 go 1.20
 
 require (
-	github.com/antchfx/xmlquery v1.3.16
+	github.com/antchfx/xmlquery v1.3.17
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
