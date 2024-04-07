@@ -3,14 +3,14 @@ module github.com/gilbsgilbs/YamahaWXA50RemoteControl
 go 1.20
 
 require (
-	github.com/antchfx/xmlquery v1.3.18
+	github.com/antchfx/xmlquery v1.4.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
 )
 
 require (
-	github.com/antchfx/xpath v1.2.4 // indirect
+	github.com/antchfx/xpath v1.3.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
